@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Request from '../../util/request';
+import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
 
@@ -33,67 +33,61 @@ const SignIn = ({ error }) =>
       isValid = isValid && validator(e.target.value);
     }
 
-    setValues({
+    let updatedForm = {
       ...logInForm,
-      object: {
-        ...object,
+      [object]: {
+        ...logInForm[object],
         value: e.target.value,
         valid: isValid,
       },
-    });
+    };
 
     let formIsValid = true;
     // eslint-disable-next-line guard-for-in
-    for (const input in logInForm)
+    for (const input in updatedForm)
     {
-      formIsValid = formIsValid && logInForm[input].valid;
+      if (input !== 'formIsValid')
+      {
+        formIsValid = formIsValid && updatedForm[input].valid;
+      }
     }
 
-    setValues({
-      ...logInForm,
+    updatedForm = {
+      ...updatedForm,
       formIsValid,
-    });
+    };
+
+    setValues(updatedForm);
   };
 
   const signIn = (e) =>
   {
     e.preventDefault();
-
-    const graphqlQuery = {
-      query: `
-        {
-          login(email: "${logInForm.email.value}", password: "${logInForm.password.value}") {
-            token
-            userId
-          }
-        }
-      `,
+    const body = {
+      email: logInForm.email.value,
+      password: logInForm.password.value,
     };
-    Request.post(JSON.stringify(graphqlQuery))
-      .then(res => res.JSON())
+
+    post('auth/login', JSON.stringify(body))
+      .then(res => res.data)
       .then((resData) =>
       {
-        if (resData.errors && resData.errors[0].status === 422)
+        if (resData.status === 201)
         {
-          throw new Error("Validation failed. Make sure the email address isn't used yet!");
-        }
-        if (resData.errors)
+          const remainingMilliseconds = 60 * 60 * 10 * 1000;
+          const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
+
+          localStorage.setItem('token', resData.data.login.token);
+          localStorage.setItem('userId', resData.data.login.userId);
+          localStorage.setItem('expiryDate', expiryDate.toISOString());
+        } else
         {
-          throw new Error('User login failed!');
+          throw new Error(resData.message);
         }
-        console.log(resData);
-
-        const remainingMilliseconds = 60 * 60 * 1000;
-        const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-
-        localStorage.setItem('token', resData.data.login.token);
-        localStorage.setItem('userId', resData.data.login.userId);
-        localStorage.setItem('expiryDate', expiryDate.toISOString());
       })
       .catch((err) =>
       {
-        console.log(err);
-        error(err);
+        error(err.message);
       });
   };
 

@@ -21,7 +21,7 @@ const Auth = () =>
       <div className={`container ${containerClass()}`} id="container">
 
         <div className="form-container sign-up-container">
-          <SignUp error={errorHandlerFunc} />
+          <SignUp error={errorHandlerFunc} userCreated={changeMode} />
         </div>
 
         <div className="form-container sign-in-container">

@@ -1,11 +1,11 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Request from '../../util/request';
+import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
 
-const SignUp = ({ error }) =>
+const SignUp = ({ error, userCreated }) =>
 {
   const SignUpFormInit = {
     email: {
@@ -74,39 +74,28 @@ const SignUp = ({ error }) =>
   {
     e.preventDefault();
 
-    const graphqlQuery = {
-      query: `
-        mutation {
-          createUser(userInput: {
-            email: "${signUpForm.email.value}",
-            name:"${signUpForm.name.value}",
-            userName:"${signUpForm.userName.value}",
-            password:"${signUpForm.password.value}"
-          }) {
-            _id
-            email
-          }
-        }
-      `,
+    const body = {
+      name: signUpForm.name.value,
+      email: signUpForm.email.value,
+      userName: signUpForm.userName.value,
+      password: signUpForm.password.value,
     };
 
-    Request.post(graphqlQuery)
-      .then(res => res.json())
+    post('auth/signup', JSON.stringify(body))
+      .then(res => res.data)
       .then((resData) =>
       {
-        if (resData.errors && resData.errors[0].status === 422)
+        if (resData.status === 201)
         {
-          throw new Error("Validation failed. Make sure the email address isn't used yet!");
-        }
-        if (resData.errors)
+          userCreated('signIn');
+        } else
         {
-          throw new Error('User creation failed!');
+          throw new Error(resData.message);
         }
-        console.log(resData);
       })
-      .catch(() =>
+      .catch((err) =>
       {
-        error('Registering User Failed');
+        error(err.message);
       });
   };
 
@@ -158,6 +147,7 @@ const SignUp = ({ error }) =>
 
 SignUp.propTypes = {
   error: PropTypes.func.isRequired,
+  userCreated: PropTypes.func.isRequired,
 };
 
 export default SignUp;
