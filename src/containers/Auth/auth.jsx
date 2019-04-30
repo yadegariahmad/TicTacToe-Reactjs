@@ -1,13 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ErrorHandler from '../../components/errorHandler/errorHandler';
 import SignUp from './sign-up';
 import SignIn from './sign-in';
 import './auth.scss';
 
-const Auth = () =>
+const Auth = ({ history }) =>
 {
   const [mode, changeMode] = useState('signIn');
   const [error, setError] = useState(null);
+
+  useEffect(() =>
+  {
+    let expired = true;
+
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+
+    if (new Date(expiryDate) >= new Date())
+    {
+      expired = false;
+    }
+
+    if (token && !expired)
+    {
+      history.push('/Game');
+    }
+  });
 
   const containerClass = () => (mode === 'signIn' ? '' : 'right-panel-active');
   function errorHandlerFunc(err)
@@ -46,6 +65,12 @@ const Auth = () =>
       </div>
     </div>
   );
+};
+
+Auth.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Auth;

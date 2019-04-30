@@ -1,11 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
 
-const SignIn = ({ error }) =>
+const SignIn = ({ error, history }) =>
 {
   const logInFormInit = {
     email: {
@@ -77,11 +78,12 @@ const SignIn = ({ error }) =>
           const remainingMilliseconds = 60 * 60 * 10 * 1000;
           const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
 
-          localStorage.setItem('token', resData.data.login.token);
-          localStorage.setItem('userId', resData.data.login.userId);
+          localStorage.setItem('token', resData.content.token);
+          localStorage.setItem('userId', resData.content.userId);
           localStorage.setItem('expiryDate', expiryDate.toISOString());
 
           setValues(logInFormInit);
+          history.push('/Game');
         } else
         {
           throw new Error(resData.message);
@@ -123,6 +125,9 @@ const SignIn = ({ error }) =>
 
 SignIn.propTypes = {
   error: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default SignIn;
+export default withRouter(SignIn);
