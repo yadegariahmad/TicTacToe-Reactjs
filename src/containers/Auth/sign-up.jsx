@@ -88,6 +88,7 @@ const SignUp = ({ error, userCreated }) =>
         if (resData.status === 201)
         {
           userCreated('signIn');
+          setValues(SignUpFormInit);
         } else
         {
           throw new Error(resData.message);

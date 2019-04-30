@@ -80,6 +80,8 @@ const SignIn = ({ error }) =>
           localStorage.setItem('token', resData.data.login.token);
           localStorage.setItem('userId', resData.data.login.userId);
           localStorage.setItem('expiryDate', expiryDate.toISOString());
+
+          setValues(logInFormInit);
         } else
         {
           throw new Error(resData.message);
