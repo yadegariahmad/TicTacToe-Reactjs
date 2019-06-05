@@ -4,23 +4,6 @@
   width: 100%;
   height: 10rem;
 
-  .input-container {
-    padding: 0;
-    border: 1.5px solid #8b8b8b;
-    border-radius: 3px 3px 0 0;
-    background-color: #fefefe;
-    width: 100%;
-    height: 20%;
-  }
-
-  &-input {
-    border: none;
-    outline: none;
-    padding: 1rem 1rem;
-    width: 100%;
-    height: 100%;
-  }
-
   &-result {
     width: 100%;
     min-height: 1px;
@@ -38,6 +21,7 @@
     margin: 0;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
 
     .user-item {
       display: flex;

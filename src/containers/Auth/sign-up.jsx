@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Form } from 'react-bootstrap';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
@@ -105,7 +106,8 @@ const SignUp = ({ error, userCreated }) =>
       <h1>Sign in</h1>
       <br />
 
-      <input
+      <Form.Label>Full Name</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={signUpForm.name.value}
         type="text"
@@ -114,7 +116,8 @@ const SignUp = ({ error, userCreated }) =>
       />
       {!signUpForm.name.valid && <span className="error">Name is required</span>}
 
-      <input
+      <Form.Label>User Name</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={signUpForm.userName.value}
         type="text"
@@ -123,7 +126,8 @@ const SignUp = ({ error, userCreated }) =>
       />
       {!signUpForm.userName.valid && <span className="error">User Name is required</span>}
 
-      <input
+      <Form.Label>Email address</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={signUpForm.email.value}
         type="email"
@@ -132,7 +136,8 @@ const SignUp = ({ error, userCreated }) =>
       />
       {!signUpForm.email.valid && <span className="error">e-mail format is incorrect</span>}
 
-      <input
+      <Form.Label>Password</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={signUpForm.password.value}
         type="password"

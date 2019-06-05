@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
-import { get } from '../../util/request';
+import { Form } from 'react-bootstrap';
+import { post } from '../../util/request';
 import './userSearch.scss';
 
 const UserSearch = () =>
@@ -10,19 +11,18 @@ const UserSearch = () =>
 
   const searchUser = (userName) =>
   {
+    setUsers([]);
     setSearchInput(userName);
 
     const body = {
-      userName: searchInput,
+      userName,
     };
-    get('user/search', JSON.stringify(body))
+    post('user/search', JSON.stringify(body))
       .then(res => res.data)
       .then((resData) =>
       {
         if (resData.status === 200)
         {
-          console.log(resData.content.users);
-
           setUsers(resData.content.users);
         } else
         {
@@ -35,9 +35,13 @@ const UserSearch = () =>
       });
   };
 
+  const selectUser = (user) =>
+  {
+
+  };
+
   const showUsers = users.map(user => (
-    // eslint-disable-next-line no-underscore-dangle
-    <li className="user-item" key={user._id}>
+    <li className="user-item" key={user._id} onClick={selectUser(user)}>
       <span className="user-name">{user.userName}</span>
       <i className={`online-status ${user.onlineStatus ? 'isOnline' : 'isOffline'}`} />
     </li>
@@ -45,17 +49,13 @@ const UserSearch = () =>
 
   return (
     <div className="search">
-      <div className="input-container">
-        <input
-          className="search-input"
-          type="search"
-          name="userName"
-          value={searchInput}
-          onChange={e => searchUser(e.target.value)}
-          placeholder="Search user by userName"
-          autoComplete="off"
-        />
-      </div>
+      <Form.Control
+        type="search"
+        placeholder="Search opponent"
+        value={searchInput}
+        onChange={e => searchUser(e.target.value)}
+        autoComplete="off"
+      />
       {(users.length > 0 && searchInput.length > 0) && (
         <div className="search-result">
           <ul className="users-list">

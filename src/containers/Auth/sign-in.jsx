@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { Form } from 'react-bootstrap';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
@@ -100,7 +101,8 @@ const SignIn = ({ error, history }) =>
       <h1>Sign in</h1>
       <br />
 
-      <input
+      <Form.Label>Email address</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={logInForm.email.value}
         type="email"
@@ -109,7 +111,8 @@ const SignIn = ({ error, history }) =>
       />
       {!logInForm.email.valid && <span className="error">e-mail format is incorrect</span>}
 
-      <input
+      <Form.Label>Password</Form.Label>
+      <Form.Control
         onChange={(e) => { changeHandler(e); }}
         value={logInForm.password.value}
         type="password"
