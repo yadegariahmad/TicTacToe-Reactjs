@@ -1,4 +1,8 @@
-import React, { Suspense, lazy, Fragment } from 'react';
+import React, {
+  Suspense,
+  lazy,
+  Fragment,
+} from 'react';
 import
 {
   withRouter,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ErrorHandler from '../../components/errorHandler/errorHandler';
+import Alert from 'react-bootstrap/Alert';
 import SignUp from './sign-up';
 import SignIn from './sign-in';
 import './auth.scss';
@@ -36,7 +36,11 @@ const Auth = ({ history }) =>
 
   return (
     <div className="Auth">
-      {error && <ErrorHandler error={error} close={() => { setError(null); }} />}
+      {error && (
+        <Alert variant="danger" onClose={() => { setError(null); }}>
+          {error}
+        </Alert>
+      )}
       <div className={`container ${containerClass()}`} id="container">
 
         <div className="form-container sign-up-container">

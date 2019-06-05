@@ -71,7 +71,6 @@ const SignIn = ({ error, history }) =>
     };
 
     post('auth/login', JSON.stringify(body))
-      .then(res => res.data)
       .then((resData) =>
       {
         if (resData.status === 201)

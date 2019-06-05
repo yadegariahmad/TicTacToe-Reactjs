@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes';
+import Store from './store';
 import { put } from './util/request';
 
 function App()
@@ -14,10 +15,13 @@ function App()
       put('user/changeStatus', JSON.stringify({ userId, status: false }));
     }
   });
+
   return (
-    <BrowserRouter basename="/">
-      <Routes />
-    </BrowserRouter>
+    <Store>
+      <BrowserRouter basename="/">
+        <Routes />
+      </BrowserRouter>
+    </Store>
   );
 }
 

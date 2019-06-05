@@ -26,9 +26,13 @@
     .user-item {
       display: flex;
       justify-content: space-between;
-      padding: 0;
-      margin: 0.5rem 0.5rem;
+      padding: 0.5rem 0.5rem;
       height: 2rem;
+
+      &:hover {
+        background: #eee;
+        cursor: pointer;
+      }
 
       .user-name {
         font-weight: 600px;
@@ -40,11 +44,11 @@
         height: 1.5rem;
       }
 
-      .isOnline {
+      .is-online {
         background-color: green;
       }
 
-      .isOffline {
+      .is-offline {
         background-color: red;
       }
     }

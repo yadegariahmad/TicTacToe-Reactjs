@@ -83,7 +83,6 @@ const SignUp = ({ error, userCreated }) =>
     };
 
     post('auth/signup', JSON.stringify(body))
-      .then(res => res.data)
       .then((resData) =>
       {
         if (resData.status === 201)
