@@ -16,14 +16,14 @@ import PageLoader from './components/pageLoader';
 
 const waitFor = Tag => props => <Tag {...props} />;
 const Auth = lazy(() => import('./containers/Auth/auth'));
-const Game = lazy(() => import('./containers/Game/game'));
+const Main = lazy(() => import('./containers/Main/main'));
 
 const Routes = ({ location }) => (
   <Fragment>
     <Suspense fallback={<PageLoader />}>
       <Switch location={location}>
         <Route path="/Auth" component={waitFor(Auth)} />
-        <Route path="/Game" component={waitFor(requireAuth(Game))} />
+        <Route path="/Main" component={waitFor(requireAuth(Main))} />
         <Redirect to="/Auth" />
       </Switch>
     </Suspense>

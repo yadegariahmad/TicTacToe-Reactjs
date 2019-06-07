@@ -5,9 +5,9 @@ import { settingsContext, gameContext } from '../../store';
 import SearchUser from '../../components/searchUser/searchUser';
 import PageLoader from '../../components/pageLoader';
 
-import './game.scss';
+import './main.scss';
 
-const Game = () =>
+const Main = () =>
 {
   const [settings, setSettings] = useContext(settingsContext);
   const [game, setGame] = useContext(gameContext);
@@ -79,4 +79,4 @@ const Game = () =>
   );
 };
 
-export default Game;
+export default Main;

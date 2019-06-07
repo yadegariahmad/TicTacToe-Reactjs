@@ -83,7 +83,7 @@ const SignIn = ({ error, history }) =>
           localStorage.setItem('expiryDate', expiryDate.toISOString());
 
           setValues(logInFormInit);
-          history.push('/Game');
+          history.push('/Main');
         } else
         {
           throw new Error(resData.message);

@@ -71,7 +71,7 @@ const UserSearch = () =>
           socket.on(`gameResponse-${body.userId}`, (data) =>
           {
             console.log('bbb');
-            
+
             getResponse(data, selectedUser._id);
           });
         }
@@ -95,11 +95,9 @@ const UserSearch = () =>
         autoComplete="off"
       />
       {(users.length > 0 && searchInput.length > 0) && (
-        <div className="search-result">
-          <ul className="users-list">
-            {showUsers}
-          </ul>
-        </div>
+        <ul className="users-list">
+          {showUsers}
+        </ul>
       )}
     </div>
   );
