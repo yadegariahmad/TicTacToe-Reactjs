@@ -30,9 +30,13 @@ const Main = () =>
         setSettings({ ...settings, showLoader: false });
         if (res.status === 200)
         {
+          console.log(res);
+          
           setGame({
-            gameId: res.gameId,
-            opponentId: res.opponentId,
+            gameId: res.content.gameId,
+            opponentId: res.content.opponentId,
+            turn: res.content.opponentId,
+            type: 'O',
           });
         }
       })
@@ -59,7 +63,7 @@ const Main = () =>
   }, []);
 
   return (
-    <div className="game">
+    <div className="main-container">
       {settings.showLoader && <PageLoader />}
       <div className="background" />
       {settings.message && (
@@ -72,11 +76,13 @@ const Main = () =>
         </Alert>
       )}
       <div className="main">
-        <div className="search-container">
-          {!game && <SearchUser />}
-        </div>
+        {!game && (
+          <div className="search-container">
+            <SearchUser />
+          </div>
+        )}
         <div className="game-container">
-          <Game />
+          {game && <Game />}
         </div>
       </div>
     </div>

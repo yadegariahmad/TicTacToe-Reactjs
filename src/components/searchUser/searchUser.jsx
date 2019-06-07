@@ -43,6 +43,8 @@ const UserSearch = () =>
       setGame({
         gameId: data.gameId,
         opponentId,
+        turn: localStorage.getItem('userId'),
+        type: 'X',
       });
     } else
     {
