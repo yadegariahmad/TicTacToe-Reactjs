@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 
 const settingsInitial = {
   showLoader: false,
-  error: '',
+  message: '',
 };
 
 export const settingsContext = React.createContext(settingsInitial);
-export const opponentContext = React.createContext(null);
+export const gameContext = React.createContext(null);
 
 // eslint-disable-next-line react/prop-types
 const Store = ({ children }) =>
 {
   const [settings, setSettings] = useState(settingsInitial);
-  const [opponent, setOpponent] = useState(null);
+  const [game, setGame] = useState(null);
 
   return (
     <settingsContext.Provider value={[settings, setSettings]}>
-      <opponentContext.Provider value={[opponent, setOpponent]}>
+      <gameContext.Provider value={[game, setGame]}>
         {children}
-      </opponentContext.Provider>
+      </gameContext.Provider>
     </settingsContext.Provider>
   );
 };

@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
+import openSocket from 'socket.io-client';
 import env from './environments';
 
 const init = () =>
@@ -46,3 +47,5 @@ export const del = (url) =>
     .then(res => res.data)
     .catch((err) => { throw new Error(err); });
 };
+
+export const socket = openSocket('http://localhost:8080');
