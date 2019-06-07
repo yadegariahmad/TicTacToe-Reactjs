@@ -3,6 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { put, post, socket } from '../../util/request';
 import { settingsContext, gameContext } from '../../store';
 import SearchUser from '../../components/searchUser/searchUser';
+import Game from '../../components/game/game';
 import PageLoader from '../../components/pageLoader';
 
 import './main.scss';
@@ -73,6 +74,9 @@ const Main = () =>
       <div className="main">
         <div className="search-container">
           {!game && <SearchUser />}
+        </div>
+        <div className="game-container">
+          <Game />
         </div>
       </div>
     </div>

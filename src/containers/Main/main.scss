@@ -15,16 +15,25 @@
   .main {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
 
     .search-container {
       position: absolute;
       top: 0.5rem;
-      left: 50%;
-      transform: translateX(-50%) ;
       width: 80%;
       max-width: 30rem;
       height: 20rem
+    }
+
+    .game-container {
+      position: absolute;
+      height: auto;
+      width: 80%;
+      max-width: 30rem;
     }
   }
 }

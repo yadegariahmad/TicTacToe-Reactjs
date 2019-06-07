@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-// import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { post, socket } from '../../util/request';
 import { settingsContext, gameContext } from '../../store';
@@ -102,14 +101,5 @@ const UserSearch = () =>
     </div>
   );
 };
-
-// errorHandler.propTypes = {
-//   error: PropTypes.string,
-//   close: PropTypes.func.isRequired,
-// };
-
-// errorHandler.defaultProps = {
-//   error: '',
-// };
 
 export default UserSearch;
