@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,12 +6,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import SignUp from './sign-up';
 import SignIn from './sign-in';
+import PageLoader from '../../components/pageLoader';
+import { settingsContext } from '../../store';
 import './auth.scss';
 
 const Auth = ({ history }) =>
 {
   const [mode, changeMode] = useState('signIn');
   const [error, setError] = useState('');
+  const [settings] = useContext(settingsContext);
 
   useEffect(() =>
   {
@@ -39,6 +42,7 @@ const Auth = ({ history }) =>
 
   return (
     <div className="Auth">
+      {settings.showLoader && <PageLoader />}
       <Dialog
         open={error.length > 0}
         onClose={() => setError('')}

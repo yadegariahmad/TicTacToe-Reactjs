@@ -1,10 +1,11 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
+import { settingsContext } from '../../store';
 import './_index.scss';
 
 const SignIn = ({ error, history }) =>
@@ -24,6 +25,7 @@ const SignIn = ({ error, history }) =>
   };
 
   const [logInForm, setValues] = useState(logInFormInit);
+  const [settings, setSettings] = useContext(settingsContext);
 
   const changeHandler = object => (e) =>
   {
@@ -63,6 +65,8 @@ const SignIn = ({ error, history }) =>
   const signIn = (e) =>
   {
     e.preventDefault();
+    setSettings({ ...settings, showLoader: true });
+
     const body = {
       email: logInForm.email.value,
       password: logInForm.password.value,
@@ -71,6 +75,7 @@ const SignIn = ({ error, history }) =>
     post('auth/login', JSON.stringify(body))
       .then((resData) =>
       {
+        setSettings({ ...settings, showLoader: false });
         if (resData.status === 201)
         {
           const remainingMilliseconds = 60 * 60 * 10 * 1000;
@@ -89,6 +94,7 @@ const SignIn = ({ error, history }) =>
       })
       .catch((err) =>
       {
+        setSettings({ ...settings, showLoader: false });
         error(err.message);
       });
   };

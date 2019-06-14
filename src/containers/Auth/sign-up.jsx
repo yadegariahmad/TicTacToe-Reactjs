@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
+import { settingsContext } from '../../store';
 import './_index.scss';
 
 const SignUp = ({ error, userCreated }) =>
@@ -33,6 +34,7 @@ const SignUp = ({ error, userCreated }) =>
   };
 
   const [signUpForm, setValues] = useState(SignUpFormInit);
+  const [settings, setSettings] = useContext(settingsContext);
 
   const changeHandler = object => (e) =>
   {
@@ -72,6 +74,7 @@ const SignUp = ({ error, userCreated }) =>
   const signUp = (e) =>
   {
     e.preventDefault();
+    setSettings({ ...settings, showLoader: true });
 
     const body = {
       name: signUpForm.name.value,
@@ -83,6 +86,7 @@ const SignUp = ({ error, userCreated }) =>
     post('auth/signup', JSON.stringify(body))
       .then((resData) =>
       {
+        setSettings({ ...settings, showLoader: false });
         if (resData.status === 201)
         {
           userCreated('signIn');
@@ -94,13 +98,14 @@ const SignUp = ({ error, userCreated }) =>
       })
       .catch((err) =>
       {
+        setSettings({ ...settings, showLoader: false });
         error(err.message);
       });
   };
 
   return (
     <form onSubmit={(e) => { signUp(e); }}>
-      <h1>Sign in</h1>
+      <h1>Sign up</h1>
       <br />
 
       <TextField
