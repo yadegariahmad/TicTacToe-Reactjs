@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import TextField from '@material-ui/core/TextField';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
@@ -25,10 +25,8 @@ const SignIn = ({ error, history }) =>
 
   const [logInForm, setValues] = useState(logInFormInit);
 
-  const changeHandler = (e) =>
+  const changeHandler = object => (e) =>
   {
-    const object = e.target.name;
-
     let isValid = true;
     for (const validator of logInForm[object].validators)
     {
@@ -99,24 +97,21 @@ const SignIn = ({ error, history }) =>
     <form onSubmit={(e) => { signIn(e); }}>
       <h1>Sign in</h1>
       <br />
-
-      <Form.Label>Email address</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
-        value={logInForm.email.value}
+      <TextField
+        label="Email"
         type="email"
-        name="email"
-        placeholder="Email"
+        value={logInForm.email.value}
+        onChange={changeHandler('email')}
+        margin="normal"
       />
       {!logInForm.email.valid && <span className="error">e-mail format is incorrect</span>}
 
-      <Form.Label>Password</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
+      <TextField
+        label="Password"
+        onChange={changeHandler('password')}
         value={logInForm.password.value}
         type="password"
-        name="password"
-        placeholder="Password"
+        margin="normal"
       />
       {!logInForm.password.valid && <span className="error">Password min length is 5</span>}
 

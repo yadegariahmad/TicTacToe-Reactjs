@@ -1,5 +1,8 @@
 import React, { useEffect, useContext } from 'react';
-import { Alert } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 import { put, post, socket } from '../../util/request';
 import { settingsContext, gameContext } from '../../store';
 import SearchUser from '../../components/searchUser/searchUser';
@@ -16,7 +19,7 @@ const Main = () =>
   const recieveGameRequest = (data) =>
   {
     // eslint-disable-next-line no-restricted-globals
-    const getPermission = confirm(`Player ${data.starter} wants to play with you`);
+    const getPermission = confirm(`${data.starter} wants to play with you`);
     setSettings({ ...settings, showLoader: true });
 
     const body = {
@@ -30,8 +33,6 @@ const Main = () =>
         setSettings({ ...settings, showLoader: false });
         if (res.status === 200)
         {
-          console.log(res);
-          
           setGame({
             gameId: res.content.gameId,
             opponentId: res.content.opponentId,
@@ -42,7 +43,7 @@ const Main = () =>
       })
       .catch(() =>
       {
-        setSettings({ showLoader: false, message: 'danger.Something went wrong.' });
+        setSettings({ showLoader: false, message: 'Something went wrong.' });
       });
   };
 
@@ -62,19 +63,30 @@ const Main = () =>
     });
   }, []);
 
+  const handleClose = () =>
+  {
+    setSettings({ ...settings, message: '' });
+  };
+
   return (
     <div className="main-container">
       {settings.showLoader && <PageLoader />}
       <div className="background" />
-      {settings.message && (
-        <Alert
-          variant={settings.message.split('.')[0]}
-          onClose={() => { setSettings({ ...settings, error: '' }); }}
-          dismissible
-        >
-          {settings.message.split('.')[1]}
-        </Alert>
-      )}
+
+      <Dialog
+        open={settings.message.length > 0}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          {settings.message}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <div className="main">
         {!game && (
           <div className="search-container">

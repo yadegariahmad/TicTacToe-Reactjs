@@ -4,48 +4,18 @@
   width: 100%;
   height: 100%;
 
-  .users-list {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    min-height: 1px;
-    border: 1.5px solid #8b8b8b;
-    border-radius: 0 0 3px 3px;
-    background-color: #fefefe;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+  .online-status {
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
 
-    .user-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0.5rem;
-      height: 2rem;
+  .is-online {
+    background-color: green;
+  }
 
-      &:hover {
-        background: #eee;
-        cursor: pointer;
-        transition: background .3s;
-      }
-
-      .user-name {
-        font-weight: 600px;
-      }
-
-      .online-status {
-        border: 1px solid black;
-        border-radius: 50%;
-        width: 1.3rem;
-        height: 1.3rem;
-      }
-
-      .is-online {
-        background-color: green;
-      }
-
-      .is-offline {
-        background-color: red;
-      }
-    }
+  .is-offline {
+    background-color: red;
   }
 }

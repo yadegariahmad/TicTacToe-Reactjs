@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Alert from 'react-bootstrap/Alert';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 import SignUp from './sign-up';
 import SignIn from './sign-in';
 import './auth.scss';
@@ -8,7 +11,7 @@ import './auth.scss';
 const Auth = ({ history }) =>
 {
   const [mode, changeMode] = useState('signIn');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() =>
   {
@@ -29,18 +32,26 @@ const Auth = ({ history }) =>
   });
 
   const containerClass = () => (mode === 'signIn' ? '' : 'right-panel-active');
-  function errorHandlerFunc(err)
+  const errorHandlerFunc = (err) =>
   {
     setError(err);
-  }
+  };
 
   return (
     <div className="Auth">
-      {error && (
-        <Alert variant="danger" onClose={() => { setError(null); }}>
+      <Dialog
+        open={error.length > 0}
+        onClose={() => setError('')}
+      >
+        <DialogTitle>
           {error}
-        </Alert>
-      )}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setError('')} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
       <div className={`container ${containerClass()}`} id="container">
 
         <div className="form-container sign-up-container">

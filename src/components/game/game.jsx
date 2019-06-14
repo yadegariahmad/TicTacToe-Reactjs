@@ -47,8 +47,7 @@ const Game = () =>
         playerId: localStorage.getItem('userId'),
         squareNumber: number,
       };
-      console.log(body);
-      
+
       post('game/changeTurn', JSON.stringify(body))
         .then(() =>
         {

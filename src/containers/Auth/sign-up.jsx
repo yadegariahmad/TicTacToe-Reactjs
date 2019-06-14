@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import TextField from '@material-ui/core/TextField';
 import { post } from '../../util/request';
 import { email, length, required } from '../../util/validators';
 import './_index.scss';
@@ -34,10 +34,8 @@ const SignUp = ({ error, userCreated }) =>
 
   const [signUpForm, setValues] = useState(SignUpFormInit);
 
-  const changeHandler = (e) =>
+  const changeHandler = object => (e) =>
   {
-    const object = e.target.name;
-
     let isValid = true;
     for (const validator of signUpForm[object].validators)
     {
@@ -105,43 +103,37 @@ const SignUp = ({ error, userCreated }) =>
       <h1>Sign in</h1>
       <br />
 
-      <Form.Label>Full Name</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
+      <TextField
+        label="Full Name"
         value={signUpForm.name.value}
-        type="text"
-        name="name"
-        placeholder="Name"
+        onChange={changeHandler('name')}
+        margin="normal"
       />
       {!signUpForm.name.valid && <span className="error">Name is required</span>}
 
-      <Form.Label>User Name</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
+      <TextField
+        label="User Name"
         value={signUpForm.userName.value}
-        type="text"
-        name="userName"
-        placeholder="User Name"
+        onChange={changeHandler('userName')}
+        margin="normal"
       />
       {!signUpForm.userName.valid && <span className="error">User Name is required</span>}
 
-      <Form.Label>Email address</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
-        value={signUpForm.email.value}
+      <TextField
+        label="Email"
         type="email"
-        name="email"
-        placeholder="Email"
+        value={signUpForm.email.value}
+        onChange={changeHandler('email')}
+        margin="normal"
       />
       {!signUpForm.email.valid && <span className="error">e-mail format is incorrect</span>}
 
-      <Form.Label>Password</Form.Label>
-      <Form.Control
-        onChange={(e) => { changeHandler(e); }}
+      <TextField
+        label="Password"
+        onChange={changeHandler('password')}
         value={signUpForm.password.value}
         type="password"
-        name="password"
-        placeholder="Password"
+        margin="normal"
       />
       {!signUpForm.password.valid && <span className="error">Password min length is 5</span>}
 

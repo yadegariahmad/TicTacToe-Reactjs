@@ -1,11 +1,26 @@
 import React, { useState, useContext } from 'react';
-import { Form } from 'react-bootstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { post, socket } from '../../util/request';
 import { settingsContext, gameContext } from '../../store';
 import './userSearch.scss';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid',
+    borderRadius: '4px',
+  },
+}));
+
 const UserSearch = () =>
 {
+  const classes = useStyles();
+
   const [searchInput, setSearchInput] = useState('');
   const [users, setUsers] = useState([]);
   const [settings, setSettings] = useContext(settingsContext);
@@ -18,6 +33,7 @@ const UserSearch = () =>
 
     const body = {
       userName,
+      id: localStorage.getItem('userId'),
     };
     post('user/search', JSON.stringify(body))
       .then((resData) =>
@@ -48,7 +64,7 @@ const UserSearch = () =>
       });
     } else
     {
-      setSettings({ ...settings, message: 'warning.Your request was not accepted.' });
+      setSettings({ ...settings, message: 'Your request was not accepted.' });
     }
   };
 
@@ -66,7 +82,7 @@ const UserSearch = () =>
         setSettings({ ...settings, showLoader: false });
         if (res.status !== 200)
         {
-          setSettings({ ...settings, message: `danger.${res.message}` });
+          setSettings({ ...settings, message: `${res.message}` });
         } else
         {
           socket.on(`gameResponse-${body.userId}`, (data) =>
@@ -80,25 +96,25 @@ const UserSearch = () =>
   };
 
   const showUsers = users.map(user => (
-    <li className="user-item" key={user._id} onClick={() => selectUser(user)}>
-      <span className="user-name">{user.userName}</span>
+    <ListItem button key={user._id} onClick={() => selectUser(user)}>
+      <ListItemText primary={user.userName} />
       <i className={`online-status ${user.onlineStatus ? 'is-online' : 'is-offline'}`} />
-    </li>
+    </ListItem>
   ));
 
   return (
     <div className="search">
-      <Form.Control
-        type="search"
-        placeholder="Search opponent"
-        value={searchInput}
+      <TextField
+        label="Users"
+        placeholder="Search for opponent"
         onChange={e => searchUser(e.target.value)}
-        autoComplete="off"
+        margin="normal"
+        variant="outlined"
       />
       {(users.length > 0 && searchInput.length > 0) && (
-        <ul className="users-list">
+        <List className={classes.root}>
           {showUsers}
-        </ul>
+        </List>
       )}
     </div>
   );
