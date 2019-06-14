@@ -78,12 +78,8 @@ const SignIn = ({ error, history }) =>
         setSettings({ ...settings, showLoader: false });
         if (resData.status === 201)
         {
-          const remainingMilliseconds = 60 * 60 * 10 * 1000;
-          const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
-
           localStorage.setItem('token', resData.content.token);
           localStorage.setItem('userId', resData.content.userId);
-          localStorage.setItem('expiryDate', expiryDate.toISOString());
 
           setValues(logInFormInit);
           history.push('/Main');

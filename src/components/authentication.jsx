@@ -18,9 +18,8 @@ export default function requireAuth(Component)
     checkAuth()
     {
       const token = localStorage.getItem('token');
-      const expiryDate = localStorage.getItem('expiryDate');
 
-      if (!token || new Date(expiryDate) <= new Date())
+      if (!token)
       {
         const { history } = this.props;
         history.push('/Auth');

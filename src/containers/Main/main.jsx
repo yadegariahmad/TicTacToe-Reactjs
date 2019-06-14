@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -13,24 +13,26 @@ import './main.scss';
 
 const Main = () =>
 {
+  const [request, setRequest] = useState({ player: '', answer: null });
   const [settings, setSettings] = useContext(settingsContext);
   const [game, setGame] = useContext(gameContext);
 
-  const recieveGameRequest = (data) =>
+  const respondGameRequest = (answer) =>
   {
-    // eslint-disable-next-line no-restricted-globals
-    const getPermission = confirm(`${data.starter} wants to play with you`);
     setSettings({ ...settings, showLoader: true });
+    setRequest({ ...request, player: '' });
 
     const body = {
       playerId: localStorage.getItem('userId'),
-      opponentUserName: data.starter,
-      answer: getPermission,
+      opponentUserName: request.player,
+      answer,
     };
     post('game/respondRequest', JSON.stringify(body))
       .then((res) =>
       {
         setSettings({ ...settings, showLoader: false });
+
+        // if answer == false => status == 210
         if (res.status === 200)
         {
           setGame({
@@ -54,11 +56,9 @@ const Main = () =>
 
     socket.on(`gameRequest-${userId}`, (data) =>
     {
-      console.log('aaa');
-
       if (!game)
       {
-        recieveGameRequest(data);
+        setRequest({ ...request, player: data.starter });
       }
     });
   }, []);
@@ -83,6 +83,23 @@ const Main = () =>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={request.player.length > 0}
+        onClose={() => respondGameRequest(false)}
+      >
+        <DialogTitle>
+          {`${request.player} wants to play with you.`}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => respondGameRequest(true)} color="primary">
+            OK
+          </Button>
+          <Button onClick={() => respondGameRequest(false)} color="secondary">
+            No
           </Button>
         </DialogActions>
       </Dialog>

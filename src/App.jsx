@@ -6,7 +6,7 @@ import { put } from './util/request';
 
 function App()
 {
-  window.addEventListener('beforeunload', (e) =>
+  window.onbeforeunload = (e) =>
   {
     e.preventDefault();
     const userId = localStorage.getItem('userId');
@@ -14,7 +14,7 @@ function App()
     {
       put('user/changeStatus', JSON.stringify({ userId, status: false }));
     }
-  });
+  };
 
   return (
     <Store>

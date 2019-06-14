@@ -87,8 +87,6 @@ const UserSearch = () =>
         {
           socket.on(`gameResponse-${body.userId}`, (data) =>
           {
-            console.log('bbb');
-
             getResponse(data, selectedUser._id);
           });
         }

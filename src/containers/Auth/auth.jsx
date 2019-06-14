@@ -18,21 +18,13 @@ const Auth = ({ history }) =>
 
   useEffect(() =>
   {
-    let expired = true;
-
     const token = localStorage.getItem('token');
-    const expiryDate = localStorage.getItem('expiryDate');
 
-    if (new Date(expiryDate) >= new Date())
+    if (token)
     {
-      expired = false;
+      history.push('/Main');
     }
-
-    if (token && !expired)
-    {
-      history.push('/Game');
-    }
-  });
+  }, []);
 
   const containerClass = () => (mode === 'signIn' ? '' : 'right-panel-active');
   const errorHandlerFunc = (err) =>
