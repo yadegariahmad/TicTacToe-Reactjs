@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 import openSocket from 'socket.io-client';
-import env from './environments';
+import consts from './const';
 
 const init = () =>
 {
@@ -19,7 +19,7 @@ const init = () =>
 export const get = (url) =>
 {
   const options = init();
-  return axios.get(`${env.API_URL}/${url}`, options)
+  return axios.get(`${consts.API_MAIN_URL}/${url}`, options)
     .then(res => res.data)
     .catch((err) => { throw new Error(err); });
 };
@@ -27,7 +27,7 @@ export const get = (url) =>
 export const post = (url, body) =>
 {
   const options = init();
-  return axios.post(`${env.API_URL}/${url}`, body, options)
+  return axios.post(`${consts.API_MAIN_URL}/${url}`, body, options)
     .then(res => res.data)
     .catch((err) => { throw new Error(err); });
 };
@@ -35,7 +35,7 @@ export const post = (url, body) =>
 export const put = (url, body) =>
 {
   const options = init();
-  return axios.put(`${env.API_URL}/${url}`, body, options)
+  return axios.put(`${consts.API_MAIN_URL}/${url}`, body, options)
     .then(res => res.data)
     .catch((err) => { throw new Error(err); });
 };
@@ -43,9 +43,9 @@ export const put = (url, body) =>
 export const del = (url) =>
 {
   const options = init();
-  return axios.delete(`${env.API_URL}/${url}`, options)
+  return axios.delete(`${consts.API_MAIN_URL}/${url}`, options)
     .then(res => res.data)
     .catch((err) => { throw new Error(err); });
 };
 
-export const socket = openSocket('http://localhost:8080');
+export const socket = openSocket(consts.API_MAIN_URL);
