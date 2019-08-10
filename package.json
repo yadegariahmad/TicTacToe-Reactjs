@@ -1,10 +1,16 @@
 {
   "name": "tic-tac-toe",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "author": {
+    "name": "Ahmad Yadegari",
+    "email": "yadegariahmad@gmail.com"
+  },
+  "homepage": "https://yadegariahmad.github.io/TicTacToe-Reactjs",
   "dependencies": {
     "@material-ui/core": "^4.1.1",
     "axios": "^0.18.1",
+    "gh-pages": "^2.1.1",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -17,6 +23,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import Routes from './routes';
 import Store from './store';
 import { put } from './util/request';
@@ -18,9 +18,9 @@ function App()
 
   return (
     <Store>
-      <BrowserRouter basename="/">
+      <HashRouter basename="/">
         <Routes />
-      </BrowserRouter>
+      </HashRouter>
     </Store>
   );
 }
