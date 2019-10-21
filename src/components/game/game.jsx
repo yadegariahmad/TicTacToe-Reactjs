@@ -20,7 +20,7 @@ const Game = () =>
 
   useEffect(() =>
   {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('TTTuserId');
     socket.on(`changeTurn-${userId}`, (data) =>
     {
       const arrayHomes = changeArrayTypeToNumber(data.squareNumber.split('.'));
@@ -221,7 +221,7 @@ const Game = () =>
     if (xo[arrayHomes[0]][arrayHomes[1]])
     {
       setSettings({ ...settings, message: 'Select an empty square' });
-    } else if (game.turn === localStorage.getItem('userId'))
+    } else if (game.turn === localStorage.getItem('TTTuserId'))
     {
       setXO([...xo, xo[arrayHomes[0]][arrayHomes[1]] = type]);
 
@@ -230,7 +230,7 @@ const Game = () =>
         setSettings({ ...settings, showLoader: true });
         const body = {
           gameId: game.gameId,
-          playerId: localStorage.getItem('userId'),
+          playerId: localStorage.getItem('TTTuserId'),
           squareNumber,
           draw: false,
         };
@@ -246,7 +246,7 @@ const Game = () =>
         setSettings({ ...settings, showLoader: true });
         const body = {
           gameId: game.gameId,
-          playerId: localStorage.getItem('userId'),
+          playerId: localStorage.getItem('TTTuserId'),
           squareNumber,
           draw: true,
         };
@@ -262,7 +262,7 @@ const Game = () =>
         setSettings({ ...settings, showLoader: true });
         const body = {
           gameId: game.gameId,
-          playerId: localStorage.getItem('userId'),
+          playerId: localStorage.getItem('TTTuserId'),
           squareNumber,
         };
 

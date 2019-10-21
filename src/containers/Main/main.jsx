@@ -23,7 +23,7 @@ const Main = () =>
     setRequest({ ...request, player: '' });
 
     const body = {
-      playerId: localStorage.getItem('userId'),
+      playerId: localStorage.getItem('TTTuserId'),
       opponentUserName: request.player,
       answer,
     };
@@ -51,7 +51,7 @@ const Main = () =>
 
   useEffect(() =>
   {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('TTTuserId');
     put('user/changeStatus', JSON.stringify({ userId, status: true }));
 
     socket.on(`gameRequest-${userId}`, (data) =>

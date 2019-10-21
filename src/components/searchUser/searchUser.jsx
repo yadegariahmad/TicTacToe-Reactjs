@@ -33,7 +33,7 @@ const UserSearch = () =>
 
     const body = {
       userName,
-      id: localStorage.getItem('userId'),
+      id: localStorage.getItem('TTTuserId'),
     };
     post('user/search', JSON.stringify(body))
       .then((resData) =>
@@ -59,7 +59,7 @@ const UserSearch = () =>
       setGame({
         gameId: data.gameId,
         opponentId,
-        turn: localStorage.getItem('userId'),
+        turn: localStorage.getItem('TTTuserId'),
         type: 'X',
       });
     } else
@@ -73,7 +73,7 @@ const UserSearch = () =>
     setSettings({ ...settings, showLoader: true });
 
     const body = {
-      userId: localStorage.getItem('userId'),
+      userId: localStorage.getItem('TTTuserId'),
       opponentId: selectedUser._id,
     };
     post('game/sendRequest', JSON.stringify(body))

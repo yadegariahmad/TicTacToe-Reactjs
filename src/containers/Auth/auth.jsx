@@ -18,7 +18,7 @@ const Auth = ({ history }) =>
 
   useEffect(() =>
   {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('TTTtoken');
 
     if (token)
     {

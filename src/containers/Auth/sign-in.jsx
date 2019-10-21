@@ -79,7 +79,7 @@ const SignIn = ({ error, history }) =>
         if (resData.status === 201)
         {
           localStorage.setItem('token', resData.content.token);
-          localStorage.setItem('userId', resData.content.userId);
+          localStorage.setItem('TTTuserId', resData.content.userId);
 
           setValues(logInFormInit);
           history.push('/Main');
