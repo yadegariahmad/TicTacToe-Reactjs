@@ -9,7 +9,7 @@
   "homepage": "https://yadegariahmad.github.io/TicTacToe-Reactjs",
   "dependencies": {
     "@material-ui/core": "^4.1.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "gh-pages": "^2.1.1",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
